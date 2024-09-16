@@ -31,4 +31,4 @@ jobs:
         run: composer install --working-dir=PrivateBin-main  # Installe les dépendances définies dans composer.json
 
       - name: Run PHPUnit
-        run: ./vendor/bin/phpunit  # Exécute les tests PHPUnit
+        run: ./PrivateBin-main/vendor/bin/phpunit  # Exécute les tests PHPUnit
