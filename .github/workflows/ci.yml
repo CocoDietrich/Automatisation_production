@@ -1,0 +1,34 @@
+name: Run PHPUnit Tests
+
+on:
+  push:
+    branches:
+      - main   # ou master selon la branche que vous utilisez
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  phpunit:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-versions: [8.1]  # Vous pouvez ajuster la version PHP si nécessaire
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # Récupère le code source du repository
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2  # Installe PHP et configure l'environnement
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, dom, xml, json, libxml  # Extensions PHP nécessaires
+
+      - name: Install dependencies
+        run: composer install  # Installe les dépendances définies dans composer.json
+
+      - name: Run PHPUnit
+        run: ./vendor/bin/phpunit  # Exécute les tests PHPUnit
