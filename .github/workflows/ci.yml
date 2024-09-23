@@ -1,9 +1,9 @@
-name: Run PHPUnit Tests
+name: Run PHPUnit Tests with Code Coverage
 
 on:
   push:
     branches:
-      - main   # ou master selon la branche que vous utilisez
+      - main
   pull_request:
     branches:
       - main
@@ -15,22 +15,28 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: [8.1]  # Vous pouvez ajuster la version PHP si nécessaire
+        php-versions: [8.1]
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Récupère le code source du repository
+        uses: actions/checkout@v3
 
       - name: Set up PHP
-        uses: shivammathur/setup-php@v2  # Installe PHP et configure l'environnement
+        uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, dom, xml, json, libxml  # Extensions PHP nécessaires
+          extensions: mbstring, dom, xml, json, libxml
 
       - name: Install dependencies
-        run: composer install --working-dir=PrivateBin-main  # Installe les dépendances définies dans composer.json
+        run: composer install --working-dir=PrivateBin-main
 
       - name: Run PHPUnit with Code Coverage
         run: |
-          cd PrivateBin-main  # Vous place dans le dossier contenant PHPUnit
-          ./vendor/bin/phpunit --coverage-clover=coverage.xml # Exécute les tests PHPUnit
+          cd PrivateBin-main
+          ./vendor/bin/phpunit --coverage-clover=coverage.xml
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: PrivateBin-main/coverage.xml  # Chemin du fichier coverage.xml
