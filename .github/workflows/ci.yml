@@ -33,4 +33,4 @@ jobs:
       - name: Run PHPUnit with Code Coverage
         run: |
           cd PrivateBin-main  # Vous place dans le dossier contenant PHPUnit
-          ./vendor/bin/phpunit --coverage-text # Exécute les tests PHPUnit
+          ./vendor/bin/phpunit --coverage-clover=coverage.xml # Exécute les tests PHPUnit
