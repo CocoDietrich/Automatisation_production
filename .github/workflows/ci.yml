@@ -43,3 +43,8 @@ jobs:
 
       - name: Check coverage report file
         run: cat PrivateBin-main/coverage.xml
+
+      - name: Code Coverage Summary
+        uses: irongut/CodeCoverageSummary@v2.3.0
+        with:
+          filename: PrivateBin-main/coverage.xml
