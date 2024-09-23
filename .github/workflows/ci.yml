@@ -45,6 +45,6 @@ jobs:
         run: cat PrivateBin-main/coverage.xml
 
       - name: Code Coverage Summary
-        uses: irongut/CodeCoverageSummary@v2.3.0
+        uses: irongut/CodeCoverageSummary@v1
         with:
           filename: PrivateBin-main/coverage.xml
