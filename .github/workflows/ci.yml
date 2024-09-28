@@ -30,20 +30,16 @@ jobs:
       - name: Install dependencies
         run: composer install --working-dir=PrivateBin-main
 
-      - name: Run PHPUnit with Code Coverage in XML
+      - name: Run PHPUnit with Code Coverage
         run: |
           cd PrivateBin-main
-          ./vendor/bin/phpunit --log-junit=coverage.xml  # Génère un rapport XML de JUnit
+          ./vendor/bin/phpunit --coverage-cobertura=coverage_cobertura.xml  # Utilisation de Cobertura pour le rapport de couverture
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v3
         with:
           name: coverage-report
-          path: PrivateBin-main/coverage.xml
+          path: PrivateBin-main/coverage_cobertura.xml
 
-      - name: Test Report Summary
-        uses: dorny/test-reporter@v1
-        with:
-          name: Test Report
-          path: PrivateBin-main/coverage.xml
-          reporter: junit
+      - name: Check coverage report file
+        run: cat PrivateBin-main/coverage_cobertura.xml
