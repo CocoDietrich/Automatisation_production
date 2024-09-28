@@ -33,13 +33,13 @@ jobs:
       - name: Run PHPUnit with Code Coverage
         run: |
           cd PrivateBin-main
-          ./vendor/bin/phpunit --coverage-clover=coverage.xml
+          ./vendor/bin/phpunit --coverage-cobertura=coverage_cobertura.xml
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v3
         with:
           name: coverage-report
-          path: PrivateBin-main/coverage.xml
+          path: PrivateBin-main/coverage_cobertura.xml
 
       - name: Check coverage report file
-        run: cat PrivateBin-main/coverage.xml
+        run: cat PrivateBin-main/coverage_cobertura.xml
