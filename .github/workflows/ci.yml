@@ -33,17 +33,17 @@ jobs:
       - name: Run PHPUnit with Code Coverage
         run: |
           cd PrivateBin-main
-          ./vendor/bin/phpunit --coverage-cobertura=coverage_cobertura.xml  # Génère un rapport Cobertura
+          ./vendor/bin/phpunit --coverage-clover=coverage_clover.xml  # Génère le rapport au format Clover (XML)
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v3
         with:
           name: coverage-report
-          path: PrivateBin-main/coverage_cobertura.xml
+          path: PrivateBin-main/coverage_clover.xml
 
       - name: Code Coverage Summary
         uses: dorny/test-reporter@v1
         with:
           name: Code Coverage
-          path: PrivateBin-main/coverage_cobertura.xml
-          reporter: cobertura
+          path: PrivateBin-main/coverage_clover.xml
+          reporter: clover
