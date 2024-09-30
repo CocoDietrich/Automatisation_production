@@ -106,7 +106,7 @@ Explication : Cette étape exécute les tests PHPUnit avec un rapport de couvert
 ```
 Explication : Cette étape sauvegarde le fichier de rapport de couverture coverage_cobertura.xml en tant qu'artefact dans GitHub Actions. Cela permet de récupérer ce fichier après l'exécution du workflow pour analyse ou partage.
 
-### Étape 6 : Vérification du fichier de couverture
+### Étape 6 : Vérification du fichier de coverage
 ```
       - name: Check coverage report file
         run: cat PrivateBin-main/coverage_cobertura.xml
@@ -132,3 +132,15 @@ Explication :
 - format: markdown : Le résumé est généré au format Markdown, compatible avec le rendu dans GitHub.
 - output: both : L'output est généré à la fois dans la section "Summary" et dans les logs.
 
+### Étape 8 : Générer et afficher le résumé du code coverage
+```
+      - name: Generate and Display Code Coverage Summary
+        run: |
+          echo "### Code Coverage Summary" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          ./vendor/bin/phpunit --coverage-cobertura --colors=never >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
+```
+Explication :
+Cette étape génère un rapport de couverture de code au format cobertura (--coverage-cobertura) et l'ajoute au résumé de l'exécution GitHub Actions en utilisant la variable spéciale $GITHUB_STEP_SUMMARY.
