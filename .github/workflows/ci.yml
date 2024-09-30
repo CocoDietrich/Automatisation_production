@@ -51,3 +51,11 @@ jobs:
           badge: true
           format: markdown
           output: both
+
+      - name: Generate and Display Code Coverage Summary
+        run: |
+          echo "### Code Coverage Summary" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          ./vendor/bin/phpunit --coverage-text --colors=never >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
