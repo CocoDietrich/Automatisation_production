@@ -52,19 +52,14 @@ jobs:
           format: markdown
           output: both
 
-      - name: Generate and Display Code Coverage Summary in Table
+      - name: Generate and Display Code Coverage Summary
         run: |
           cd PrivateBin-main
           echo "### Code Coverage Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Metric | Covered | Total | Percentage |" >> $GITHUB_STEP_SUMMARY
-          echo "|--------|---------|-------|------------|" >> $GITHUB_STEP_SUMMARY
-          coverage=$(./vendor/bin/phpunit --coverage-text --colors=never | grep -E "(Lines|Methods|Classes)")
-          lines=$(echo "$coverage" | grep "Lines" | awk '{print $2 " | " $4 " | " $6 " | " $8}')
-          methods=$(echo "$coverage" | grep "Methods" | awk '{print $2 " | " $4 " | " $6 " | " $8}')
-          classes=$(echo "$coverage" | grep "Classes" | awk '{print $2 " | " $4 " | " $6 " | " $8}')
-          echo "| Lines | $lines |" >> $GITHUB_STEP_SUMMARY
-          echo "| Methods | $methods |" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          ./vendor/bin/phpunit --coverage-text --colors=never >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
           echo "| Classes | $classes |" >> $GITHUB_STEP_SUMMARY
 
 
