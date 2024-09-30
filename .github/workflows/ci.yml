@@ -60,6 +60,4 @@ jobs:
           ./vendor/bin/phpunit --coverage-text --colors=never >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
-          echo "| Classes | $classes |" >> $GITHUB_STEP_SUMMARY
-
 
