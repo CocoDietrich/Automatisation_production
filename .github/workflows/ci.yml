@@ -54,6 +54,7 @@ jobs:
 
       - name: Generate and Display Code Coverage Summary in Table
         run: |
+          cd PrivateBin-main
           echo "### Code Coverage Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Metric | Covered | Total | Percentage |" >> $GITHUB_STEP_SUMMARY
