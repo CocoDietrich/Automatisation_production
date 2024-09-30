@@ -57,7 +57,7 @@ jobs:
           cd PrivateBin-main
           echo "### Code Coverage Summary" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          ./vendor/bin/phpunit --coverage-cobertura --colors=never >> $GITHUB_STEP_SUMMARY
+          ./vendor/bin/phpunit --coverage-text --colors=never >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
 
