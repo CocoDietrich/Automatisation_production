@@ -61,6 +61,7 @@ Explication : Cette section utilise une matrice pour permettre l'exécution du w
         uses: actions/checkout@v3
 
 ```
+Explication : Cette étape utilise l'action actions/checkout@v3 pour récupérer le code source du repository dans l'environnement de travail.
 
 ### Étape 2 : Installation de PHP et des extensions
 ```
@@ -71,6 +72,7 @@ Explication : Cette section utilise une matrice pour permettre l'exécution du w
           extensions: mbstring, dom, xml, json, libxml
 
 ```
+Explication : Cette étape installe PHP (version 8.1 ici) et les extensions nécessaires pour exécuter les tests. L'action shivammathur/setup-php@v2 est utilisée pour gérer l'installation de PHP et des extensions : mbstring, dom, xml, json, et libxml.
 
 ### Étape 3 : Installation des dépendances
 ```
@@ -78,6 +80,7 @@ Explication : Cette section utilise une matrice pour permettre l'exécution du w
         run: composer install --working-dir=PrivateBin-main
 
 ```
+Explication : Ici, les dépendances du projet définies dans le fichier composer.json sont installées via Composer. On spécifie le répertoire de travail, ici PrivateBin-main, où se trouve le fichier composer.json.
 
 ### Étape 4 : Exécution de PHPUnit avec génération de la couverture de code
 ```
@@ -87,6 +90,10 @@ Explication : Cette section utilise une matrice pour permettre l'exécution du w
           ./vendor/bin/phpunit --coverage-cobertura=coverage_cobertura.xml
 
 ```
+Explication : Cette étape exécute les tests PHPUnit avec un rapport de couverture de code au format Cobertura. Le rapport est généré et stocké dans le fichier coverage_cobertura.xml.
+- cd PrivateBin-main : Change le répertoire de travail pour PrivateBin-main, là où se trouvent les fichiers du projet.
+- ./vendor/bin/phpunit --coverage-cobertura=coverage_cobertura.xml : Exécute les tests en utilisant PHPUnit et génère un rapport de couverture de code au format Cobertura, stocké dans le fichier coverage_cobertura.xml.
+### Le fichier coverage_cobertura.xml est généré localement et stocké dans le répertoire PrivateBin-main.
 
 ### Étape 5 : Téléchargement du rapport de couverture
 ```
@@ -97,6 +104,7 @@ Explication : Cette section utilise une matrice pour permettre l'exécution du w
           path: PrivateBin-main/coverage_cobertura.xml
 
 ```
+Explication : Cette étape sauvegarde le fichier de rapport de couverture coverage_cobertura.xml en tant qu'artefact dans GitHub Actions. Cela permet de récupérer ce fichier après l'exécution du workflow pour analyse ou partage.
 
 ### Étape 6 : Vérification du fichier de couverture
 ```
@@ -104,6 +112,7 @@ Explication : Cette section utilise une matrice pour permettre l'exécution du w
         run: cat PrivateBin-main/coverage_cobertura.xml
 
 ```
+Explication : La commande cat affiche le contenu du fichier coverage_cobertura.xml directement dans les logs de l'exécution GitHub Actions. Cela permet de vérifier que le fichier a bien été généré et de voir un aperçu du rapport de couverture. Cette étape n'est pas obligatoire mais permet de vérifier que le fichier est bien stocké.
 
 ### Étape 7 : Génération d'un résumé de la couverture de code dans GitHub Summary
 ```
@@ -116,4 +125,10 @@ Explication : Cette section utilise une matrice pour permettre l'exécution du w
           output: both
 
 ```
+Explication :
+- irongut/CodeCoverageSummary@v1.3.0 : Utilisation de cette action pour analyser le fichier de couverture Cobertura et générer un résumé dans la section Summary de GitHub Actions.
+- filename: PrivateBin-main/coverage_cobertura.xml : Le fichier de couverture utilisé est coverage_cobertura.xml généré à l'étape précédente.
+- badge: true : Indique que l'action doit générer un badge de couverture de code, utile pour un affichage visuel de la couverture dans les README ou dans GitHub Actions.
+- format: markdown : Le résumé est généré au format Markdown, compatible avec le rendu dans GitHub.
+- output: both : L'output est généré à la fois dans la section "Summary" et dans les logs.
 
