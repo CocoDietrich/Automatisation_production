@@ -126,11 +126,11 @@ Explication : La commande cat affiche le contenu du fichier coverage_cobertura.x
 
 ```
 Explication :
-- irongut/CodeCoverageSummary@v1.3.0 : Utilisation de cette action pour analyser le fichier de couverture Cobertura et générer un résumé dans la section Summary de GitHub Actions.
-- filename: PrivateBin-main/coverage_cobertura.xml : Le fichier de couverture utilisé est coverage_cobertura.xml généré à l'étape précédente.
-- badge: true : Indique que l'action doit générer un badge de couverture de code, utile pour un affichage visuel de la couverture dans les README ou dans GitHub Actions.
-- format: markdown : Le résumé est généré au format Markdown, compatible avec le rendu dans GitHub.
-- output: both : L'output est généré à la fois dans la section "Summary" et dans les logs.
+- ```irongut/CodeCoverageSummary@v1.3.0``` : Utilisation de cette action pour analyser le fichier de couverture Cobertura et générer un résumé dans la section Summary de GitHub Actions.
+- ```filename``` : PrivateBin-main/coverage_cobertura.xml : Le fichier de couverture utilisé est coverage_cobertura.xml généré à l'étape précédente.
+- ```badge: true``` : Indique que l'action doit générer un badge de couverture de code, utile pour un affichage visuel de la couverture dans les README ou dans GitHub Actions.
+- ```format: markdown``` : Le résumé est généré au format Markdown, compatible avec le rendu dans GitHub.
+- ```output: both``` : L'output est généré à la fois dans la section "Summary" et dans les logs.
 
 ### Étape 8 : Générer et afficher le résumé du code coverage
 ```
@@ -138,9 +138,17 @@ Explication :
         run: |
           echo "### Code Coverage Summary" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          ./vendor/bin/phpunit --coverage-cobertura --colors=never >> $GITHUB_STEP_SUMMARY
+          ./vendor/bin/phpunit --coverage-text --colors=never >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
 ```
 Explication :
-Cette étape génère un rapport de couverture de code au format cobertura (--coverage-cobertura) et l'ajoute au résumé de l'exécution GitHub Actions en utilisant la variable spéciale $GITHUB_STEP_SUMMARY.
+Cette étape génère un rapport de couverture de code au format text (--coverage-text) et l'ajoute au résumé de l'exécution GitHub Actions en utilisant la variable spéciale $GITHUB_STEP_SUMMARY.
+- ```echo "### Code Coverage Summary" >> $GITHUB_STEP_SUMMARY``` : Ajoute un titre au résumé dans le format Markdown.
+- ```echo "\``" >> $GITHUB_STEP_SUMMARY``` : Ajoute des balises pour formater le texte du rapport en tant que bloc de code dans Markdown.
+- ```./vendor/bin/phpunit --coverage-text --colors=never >> $GITHUB_STEP_SUMMARY``` : Exécute PHPUnit pour générer un rapport de couverture en texte brut et l'ajoute directement dans le résumé.
+- ```echo "\``" >> $GITHUB_STEP_SUMMARY``` : Ferme le bloc de code Markdown.
+
+### En résumé
+Après l'exécution du workflow, le rapport de coverage sera visible sous forme de texte formaté directement dans le résumé du job sur la page GitHub Actions.
+Ainsi, le fichier ci.yml permet non seulement de générer le rapport et de le stocker en fichier, mais aussi de le lire facilement directement dans l'interface GitHub Actions.
