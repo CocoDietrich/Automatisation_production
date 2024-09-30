@@ -33,7 +33,7 @@ jobs:
       - name: Run PHPUnit with Code Coverage
         run: |
           cd PrivateBin-main
-          ./vendor/bin/phpunit --coverage-cobertura=coverage_cobertura.xml  # Utilisation de Cobertura pour le rapport de couverture
+          ./vendor/bin/phpunit --coverage-cobertura=coverage_cobertura.xml
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v3
@@ -43,3 +43,11 @@ jobs:
 
       - name: Check coverage report file
         run: cat PrivateBin-main/coverage_cobertura.xml
+
+      - name: Code Coverage Summary Report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: PrivateBin-main/coverage_cobertura.xml
+          badge: true
+          format: markdown
+          output: both
