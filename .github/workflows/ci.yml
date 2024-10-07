@@ -35,20 +35,26 @@ jobs:
           cd PrivateBin-main
           ./vendor/bin/phpunit --coverage-cobertura=coverage_cobertura.xml
 
-      - name: Run PHP_CodeSniffer
-        run: |
-          cd PrivateBin-main
-          ./vendor/bin/phpcs --extensions=php ./lib/
+      - name: PHP_CodeSniffer (phpcs)
+        uses: thenabeel/action-phpcs@v8
+        with:
+          files: "./lib/**/*.php"
+          phpcs_path: ./vendor/bin/phpcs
+          standard: PSR12
 
-      - name: Run PHP Mess Detector
-        run: |
-          cd PrivateBin-main
-          ./vendor/bin/phpmd ./lib ansi codesize,unusedcode,naming
+      - name: PHP Mess Detector (phpmd)
+        uses: php-actions/phpmd@v1
+        with:
+          php_version: 8.1
+          path: lib/
+          output: text
+          ruleset: codesize,unusedcode,naming
 
-      - name: Run PHPUnit with Code Coverage
-        run: |
-          cd PrivateBin-main
-          ./vendor/bin/phpunit --coverage-cobertura=coverage_cobertura.xml --configuration=phpunit.xml
+      - name: PHPStan
+        uses: php-actions/phpstan@v3
+        with:
+          level: max 
+          paths: lib/ 
 
 
       - name: Upload coverage report
