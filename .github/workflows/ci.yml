@@ -66,6 +66,7 @@ jobs:
           server: ${{ secrets.FTP_URL }}
           username: ${{ secrets.LOGIN }}
           password: ${{ secrets.MDP }}
+          local-dir: 'PrivateBin-main/'
           server-dir: 'www/'
           exclude: "[**/.git/**, **/vendor/**]"
           
