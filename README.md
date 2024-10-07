@@ -156,34 +156,33 @@ Ainsi, le fichier ci.yml permet non seulement de générer le rapport et de le s
 ## Les problèmes auxquels nous avons fait face
 
 ### 1. Erreur : "Unable to resolve action irongut/code-coverage-summary"
-Problème : Au début, il y avait une erreur lors de l'utilisation de l'action ```irongut/code-coverage-summary```. Le message d'erreur indiquait que la version ou l'action n'était pas trouvée.
-Cause : La version ou l'action demandée n'existait pas sous ce nom ou elle avait été mal spécifiée dans le fichier YML.
-Solution : Nous avons confirmé que l'action correcte était ```irongut/CodeCoverageSummary@v1.3.0```. En changeant la version et en utilisant cette action correctement, cela a permis de résoudre le problème.
+- Problème : Au début, il y avait une erreur lors de l'utilisation de l'action ```irongut/code-coverage-summary```. Le message d'erreur indiquait que la version ou l'action n'était pas trouvée.
+- Cause : La version ou l'action demandée n'existait pas sous ce nom ou elle avait été mal spécifiée dans le fichier YML.
+- Solution : Nous avons confirmé que l'action correcte était ```irongut/CodeCoverageSummary@v1.3.0```. En changeant la version et en utilisant cette action correctement, cela a permis de résoudre le problème.
 
 ### 2. Erreur de format "reporter" dans PHPUnit
-Problème : Lorsque nous avons essayé d'utiliser un autre format de rapport pour la couverture de code, nous avons reçu l'erreur Input variable 'reporter' is set to invalid value 'cobertura' et plus tard pour 'clover' également.
-Cause : PHPUnit ne supportait pas les formats non pris en charge par l'action utilisée pour résumer le rapport de couverture, ou bien le mauvais format de sortie était utilisé dans les configurations.
-Solution : Nous avons ajusté le format de génération de couverture avec ```--coverage-cobertura``` pour spécifier le bon format de rapport (Cobertura) et avons utilisé l'outil correspondant pour la lecture de ce fichier dans l'action GitHub.
+- Problème : Lorsque nous avons essayé d'utiliser un autre format de rapport pour la couverture de code, nous avons reçu l'erreur Input variable 'reporter' is set to invalid value 'cobertura' et plus tard pour 'clover' également.
+- Cause : PHPUnit ne supportait pas les formats non pris en charge par l'action utilisée pour résumer le rapport de couverture, ou bien le mauvais format de sortie était utilisé dans les configurations.
+- Solution : Nous avons ajusté le format de génération de couverture avec ```--coverage-cobertura``` pour spécifier le bon format de rapport (Cobertura) et avons utilisé l'outil correspondant pour la lecture de ce fichier dans l'action GitHub.
 
 ### 3. Téléchargement et stockage de l'artifact de couverture de code
-Problème : Il y avait confusion quant à la localisation du fichier de couverture généré (coverage_cobertura.xml). On a initialement pensé qu'il restait stocké localement dans le répertoire PrivateBin-main.
-Cause : Ce fichier est d'abord généré localement, mais il est ensuite téléversé dans GitHub comme un artifact, et non seulement localement sur la machine virtuelle.
-Solution : L'utilisation de l'action ```actions/upload-artifact@v3``` a permis de stocker le fichier de couverture en tant qu'artifact GitHub, disponible pour téléchargement depuis l'interface GitHub Actions après l'exécution du job.
+- Problème : Il y avait confusion quant à la localisation du fichier de couverture généré (coverage_cobertura.xml). On a initialement pensé qu'il restait stocké localement dans le répertoire PrivateBin-main.
+- Cause : Ce fichier est d'abord généré localement, mais il est ensuite téléversé dans GitHub comme un artifact, et non seulement localement sur la machine virtuelle.
+- Solution : L'utilisation de l'action ```actions/upload-artifact@v3``` a permis de stocker le fichier de couverture en tant qu'artifact GitHub, disponible pour téléchargement depuis l'interface GitHub Actions après l'exécution du job.
 
 ### 4. Affichage du résumé de couverture de code dans GitHub Actions
-Problème : Initialement, le rapport de couverture de code n'était affiché qu'en tant que fichier brut (via la commande cat). Cependant, cela ne fournissait pas une vue claire dans l'interface GitHub.
-Cause : La commande cat affichait simplement le contenu XML dans les logs, mais n'était pas bien formatée ou présentée dans l'interface utilisateur GitHub.
-Solution : Nous avons utilisé la fonctionnalité de GitHub Actions Job Summaries pour générer un résumé enrichi en Markdown du rapport de couverture de code. Cela a permis de créer une table récapitulative plus lisible avec des informations claires sur la couverture du code directement dans l'onglet Summary de GitHub Actions.
+- Problème : Initialement, le rapport de couverture de code n'était affiché qu'en tant que fichier brut (via la commande cat). Cependant, cela ne fournissait pas une vue claire dans l'interface GitHub.
+- Cause : La commande cat affichait simplement le contenu XML dans les logs, mais n'était pas bien formatée ou présentée dans l'interface utilisateur GitHub.
+- Solution : Nous avons utilisé la fonctionnalité de GitHub Actions Job Summaries pour générer un résumé enrichi en Markdown du rapport de couverture de code. Cela a permis de créer une table récapitulative plus lisible avec des informations claires sur la couverture du code directement dans l'onglet Summary de GitHub Actions.
 
 ### 5. Structure et chemin d'accès du projet
-Problème : Les tests PHPUnit devaient être exécutés dans un sous-répertoire (PrivateBin-main) et cela n'était pas explicitement précisé au départ, provoquant l'échec de certaines étapes.
-Cause : Les commandes PHPUnit cherchaient à s'exécuter à la racine du projet sans naviguer vers le répertoire approprié.
-Solution : Nous avons ajouté une commande explicite dans le fichier YAML pour naviguer vers le bon répertoire avant d'exécuter les tests PHPUnit :
-```cd PrivateBin-main```
+- Problème : Les tests PHPUnit devaient être exécutés dans un sous-répertoire (PrivateBin-main) et cela n'était pas explicitement précisé au départ, provoquant l'échec de certaines étapes.
+- Cause : Les commandes PHPUnit cherchaient à s'exécuter à la racine du projet sans naviguer vers le répertoire approprié.
+- Solution : Nous avons ajouté une commande explicite dans le fichier YAML pour naviguer vers le bon répertoire avant d'exécuter les tests PHPUnit : ```cd PrivateBin-main```
 
 ### 6. Amélioration de l'affichage du rapport avec un tableau Markdown
-Problème : Bien que le résumé de couverture de code ait été affiché, il manquait une structuration claire, comme un tableau, pour rendre l'information plus compréhensible.
-Solution : Nous avons utilisé la fonctionnalité de Markdown avancé et de tableaux dans GitHub Actions. En ajoutant un tableau dans le résumé du job, nous avons pu afficher les résultats de manière plus lisible et structurée directement dans la section Summary de l'action.
+- Problème : Bien que le résumé de couverture de code ait été affiché, il manquait une structuration claire, comme un tableau, pour rendre l'information plus compréhensible.
+- Solution : Nous avons utilisé la fonctionnalité de Markdown avancé et de tableaux dans GitHub Actions. En ajoutant un tableau dans le résumé du job, nous avons pu afficher les résultats de manière plus lisible et structurée directement dans la section Summary de l'action.
 
 ### Conclusion :
 Ces problèmes étaient tous liés à des erreurs de configuration dans GitHub Actions, de génération de couverture de code, et à des erreurs dans la gestion des fichiers et formats. En apportant les corrections nécessaires, notamment en utilisant des actions appropriées, en choisissant les bons formats de rapport, et en configurant correctement l'affichage des résultats dans GitHub Actions, nous avons réussi à automatiser les tests avec un rapport de couverture bien formaté et accessible.
