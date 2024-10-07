@@ -67,6 +67,6 @@ jobs:
           username: ${{ secrets.LOGIN }}
           password: ${{ secrets.MDP }}
           server-dir: 'www/'
-          exclude: '[**/.git/**, **/vendor/**]'
+          exclude: "[**/.git/**, **/vendor/**]"
           
 
