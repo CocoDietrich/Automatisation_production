@@ -177,6 +177,7 @@ Ce paramètre définit le répertoire cible sur le serveur distant. Ici, il s'ag
 Ce paramètre exclut certains fichiers ou répertoires du déploiement. Ici, les dossiers .git/ (les fichiers de contrôle de version) et vendor/ (les dépendances PHP gérées par Composer) ne sont pas synchronisés avec le serveur.
 
 Explication :
+
 Cette étape du workflow permet de déployer automatiquement les fichiers du projet (situés dans PrivateBin-main/) vers un serveur FTP distant dans le répertoire www/. En excluant certains dossiers (comme .git et vendor), seuls les fichiers nécessaires au fonctionnement de l'application ou du site seront transférés. Cela permet une mise à jour continue du site web via GitHub Actions à chaque modification du code source.
 
 Grâce à l'utilisation des secrets GitHub, les informations sensibles comme le serveur FTP, le nom d'utilisateur et le mot de passe restent protégées, même si le fichier YML est public.
