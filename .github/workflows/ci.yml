@@ -38,7 +38,7 @@ jobs:
       - name: PHP_CodeSniffer (phpcs)
         uses: thenabeel/action-phpcs@v8
         with:
-          files: "./lib/**/*.php"
+          files: "./PrivateBin-main/lib/**/*.php"
           phpcs_path: ./vendor/bin/phpcs
           standard: PSR12
 
@@ -46,7 +46,7 @@ jobs:
         uses: php-actions/phpmd@v1
         with:
           php_version: 8.1
-          path: lib/
+          path: PrivateBin-main/lib/
           output: text
           ruleset: codesize,unusedcode,naming
 
@@ -54,7 +54,7 @@ jobs:
         uses: php-actions/phpstan@v3
         with:
           level: max 
-          paths: lib/ 
+          paths: PrivateBin-main/lib/ 
 
 
       - name: Upload coverage report
