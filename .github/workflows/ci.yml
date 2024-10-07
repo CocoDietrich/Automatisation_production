@@ -63,8 +63,10 @@ jobs:
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.LOGIN }}@${{ secrets.FTP_URL }}
+          server: ${{ secrets.FTP_URL }}
           username: ${{ secrets.LOGIN }}
           password: ${{ secrets.MDP }}
+          server_dir: 'www/'
+          exclude: 'vendor/'
           
 
