@@ -152,3 +152,7 @@ Cette étape génère un rapport de couverture de code au format text (--coverag
 ### En résumé
 Après l'exécution du workflow, le rapport de coverage sera visible sous forme de texte formaté directement dans le résumé du job sur la page GitHub Actions.
 Ainsi, le fichier ci.yml permet non seulement de générer le rapport et de le stocker en fichier, mais aussi de le lire facilement directement dans l'interface GitHub Actions.
+
+## Les problèmes que nous avons rencontrés :
+
+### 
