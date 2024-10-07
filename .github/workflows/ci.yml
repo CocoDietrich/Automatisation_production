@@ -37,10 +37,12 @@ jobs:
 
       - name: Run PHP_CodeSniffer
         run: |
+          cd PrivateBin-main
           ./vendor/bin/phpcs --extensions=php ./lib/
 
       - name: Run PHP Mess Detector
         run: |
+          cd PrivateBin-main
           ./vendor/bin/phpmd ./lib ansi codesize,unusedcode,naming
 
       - name: Run PHPUnit with Code Coverage
@@ -73,11 +75,6 @@ jobs:
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           ./vendor/bin/phpunit --coverage-text --colors=never >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-
-      - name: Install PHP_CodeSniffer
-        run: |
-          curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
-          php phpcs.phar --version
           
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.0.0
