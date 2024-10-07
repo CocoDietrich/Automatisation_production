@@ -149,6 +149,38 @@ Cette étape génère un rapport de couverture de code au format text (--coverag
 - ```./vendor/bin/phpunit --coverage-text --colors=never >> $GITHUB_STEP_SUMMARY``` : Exécute PHPUnit pour générer un rapport de couverture en texte brut et l'ajoute directement dans le résumé.
 - ```echo "\``" >> $GITHUB_STEP_SUMMARY``` : Ferme le bloc de code Markdown.
 
+### Etape 9 : Déployer le site sur un serveur FTP
+```
+- name: Sync files
+  uses: SamKirkland/FTP-Deploy-Action@v4.0.0
+  with:
+    server: ${{ secrets.FTP_URL }}
+    username: ${{ secrets.LOGIN }}
+    password: ${{ secrets.MDP }}
+    local-dir: 'PrivateBin-main/'
+    server-dir: 'www/'
+    exclude: "[**/.git/**, **/vendor/**]"
+
+```
+Paramètres importants :
+- ```server: ${{ secrets.FTP_URL }}``` :
+Le paramètre server spécifie l'URL du serveur FTP auquel se connecter. Il utilise une variable de secret GitHub appelée FTP_URL, qui est stockée en toute sécurité dans les secrets du dépôt. Cela protège les informations sensibles comme les adresses de serveurs.
+- ```username: ${{ secrets.LOGIN }}``` :
+Il spécifie le nom d'utilisateur FTP pour se connecter au serveur, également stocké sous forme de secret (LOGIN) dans GitHub pour des raisons de sécurité.
+- ```password: ${{ secrets.MDP }}``` :
+Ce champ contient le mot de passe FTP (référence à la variable secrète MDP), utilisé pour authentifier la connexion FTP. Ici encore, il est sécurisé dans les secrets GitHub.
+- ```local-dir: 'PrivateBin-main/'``` :
+Indique le répertoire local qui doit être synchronisé avec le serveur distant. Ici, il s'agit du répertoire PrivateBin-main/, qui contient les fichiers à déployer.
+- ```server-dir: 'www/'``` :
+Ce paramètre définit le répertoire cible sur le serveur distant. Ici, il s'agit du répertoire www/, où les fichiers seront téléchargés ou mis à jour.
+- ```exclude: "[**/.git/**, **/vendor/**]"``` :
+Ce paramètre exclut certains fichiers ou répertoires du déploiement. Ici, les dossiers .git/ (les fichiers de contrôle de version) et vendor/ (les dépendances PHP gérées par Composer) ne sont pas synchronisés avec le serveur.
+
+Explication :
+Cette étape du workflow permet de déployer automatiquement les fichiers du projet (situés dans PrivateBin-main/) vers un serveur FTP distant dans le répertoire www/. En excluant certains dossiers (comme .git et vendor), seuls les fichiers nécessaires au fonctionnement de l'application ou du site seront transférés. Cela permet une mise à jour continue du site web via GitHub Actions à chaque modification du code source.
+
+Grâce à l'utilisation des secrets GitHub, les informations sensibles comme le serveur FTP, le nom d'utilisateur et le mot de passe restent protégées, même si le fichier YML est public.
+
 ### En résumé
 Après l'exécution du workflow, le rapport de coverage sera visible sous forme de texte formaté directement dans le résumé du job sur la page GitHub Actions.
 Ainsi, le fichier ci.yml permet non seulement de générer le rapport et de le stocker en fichier, mais aussi de le lire facilement directement dans l'interface GitHub Actions.
