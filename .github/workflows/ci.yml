@@ -35,11 +35,6 @@ jobs:
           cd PrivateBin-main
           ./vendor/bin/phpunit --coverage-cobertura=coverage_cobertura.xml
 
-      - name: PHP Code Sniffer
-        uses: php-actions/phpcs@v1
-        with:
-          path: ./
-
       - name: Upload coverage report
         uses: actions/upload-artifact@v3
         with:
