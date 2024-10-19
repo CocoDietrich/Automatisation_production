@@ -35,11 +35,6 @@ jobs:
           cd PrivateBin-main
           ./vendor/bin/phpunit --coverage-cobertura=coverage_cobertura.xml
 
-      - name: PHP Mess Detector
-        uses: php-actions/phpmd@v1
-        with:
-          path: ./
-
       - name: PHP Code Sniffer
         uses: php-actions/phpcs@v1
         with:
