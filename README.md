@@ -217,7 +217,7 @@ Ainsi, le fichier ci.yml permet non seulement de générer le rapport et de le s
 - Problème : Bien que le résumé de couverture de code ait été affiché, il manquait une structuration claire, comme un tableau, pour rendre l'information plus compréhensible.
 - Solution : Nous avons utilisé la fonctionnalité de Markdown avancé et de tableaux dans GitHub Actions. En ajoutant un tableau dans le résumé du job, nous avons pu afficher les résultats de manière plus lisible et structurée directement dans la section Summary de l'action.
 
-### 7. Erreurs dans le TD
+### 7. Erreurs dans le TD4
 - Problème : Lancer PHPCS, PHPMD et PHPStan en local générait des erreurs dont nous n'avons pas réussi à trouver la solution.
 - Cause : Une mauvaise utilisation de PHPCS, PHPMD et PHPStan
 - Voici ce que l'on avait rajouté dans le fichier ci.yml pour les lancer :
