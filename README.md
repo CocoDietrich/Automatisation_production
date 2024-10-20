@@ -217,5 +217,24 @@ Ainsi, le fichier ci.yml permet non seulement de générer le rapport et de le s
 - Problème : Bien que le résumé de couverture de code ait été affiché, il manquait une structuration claire, comme un tableau, pour rendre l'information plus compréhensible.
 - Solution : Nous avons utilisé la fonctionnalité de Markdown avancé et de tableaux dans GitHub Actions. En ajoutant un tableau dans le résumé du job, nous avons pu afficher les résultats de manière plus lisible et structurée directement dans la section Summary de l'action.
 
+### 7. Erreurs dans le TD
+- Problème : Lancer PHPCS, PHPMD et PHPStan en local générait des erreurs dont nous n'avons pas réussi à trouver la solution.
+- Cause : Une mauvaise utilisation de PHPCS, PHPMD et PHPStan
+- Voici ce que l'on avait rajouté dans le fichier ci.yml pour les lancer :
+```
+name: PHP Stan
+ uses: php-actions/phpstan@v3
+    with:
+      path: ./
+name: PHP Mess Detector
+uses: php-actions/phpmd@v1
+with:
+   path: ./
+name: PHP Code Sniffer
+uses: php-actions/phpcs@v1
+with:
+   path: ./
+```
+
 ### Conclusion :
 Ces problèmes étaient tous liés à des erreurs de configuration dans GitHub Actions, de génération de couverture de code, et à des erreurs dans la gestion des fichiers et formats. En apportant les corrections nécessaires, notamment en utilisant des actions appropriées, en choisissant les bons formats de rapport, et en configurant correctement l'affichage des résultats dans GitHub Actions, nous avons réussi à automatiser les tests avec un rapport de couverture bien formaté et accessible.
